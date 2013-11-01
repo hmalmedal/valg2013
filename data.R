@@ -1,13 +1,14 @@
 library(plyr)
 valg2013 <- read.csv("~/Documents/R/Valg 2013/valg2013.csv",
                      colClasses = c("factor",
-                                    "character",
+                                    "factor",
                                     "character",
                                     "factor",
                                     "factor",
                                     "NULL",
                                     "integer",
                                     rep("NULL", 5)))
+valg2013$Fylke <- factor(valg2013$Fylke, unique(valg2013$Fylke))
 colnames(valg2013)[6] <- "Kommunestemmer"
 kommunetotal <- aggregate(Kommunestemmer ~ KommuneID, data = valg2013, sum)
 colnames(kommunetotal)[2] <- "Kommunetotal"
@@ -29,9 +30,8 @@ landsstemmer$Landsprosent <- landsstemmer$Landsstemmer /
     landsstemmer$Landstotal * 100
 valg2013 <- join(valg2013, landsstemmer)
 
-parti <- read.csv("~/Documents/R/Valg 2013/parti.csv",
-                  colClasses = c("factor",
-                                 "character"))
+parti <- read.csv("~/Documents/R/Valg 2013/parti.csv")
+parti$Partinavn <- factor(parti$Partinavn, parti$Partinavn)
 
 valg2013$Parti <- factor(valg2013$Parti, parti$Parti)
 valg2013 <- join(valg2013, parti)
