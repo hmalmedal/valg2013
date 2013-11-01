@@ -1,0 +1,64 @@
+Valg 2013
+========================================================
+author: Håkon Malmedal
+date: 
+
+Innledning
+==========
+
+Dette er en presentasjon av partienes valgresultater i kommunene for
+stortingsvalget i 2013.
+
+
+```{r init, echo=FALSE}
+source("data.R")
+opts_chunk$set(fig.width=960/72, fig.height=600/72, cache=T)
+```
+
+Boksplott for de ni største partiene
+========================================================
+
+```{r ni, echo=FALSE}
+library(ggplot2)
+i <- which(valg2013$Parti %in% levels(valg2013$Parti)[1:9])
+p <- ggplot(valg2013[i, ], aes(x = Partinavn, y = Kommuneprosent))
+p <- p + geom_boxplot()
+p <- p + xlab("Parti") + ylab("Prosent")
+print(p)
+```
+
+Fylkesvise boksplott
+========================================================
+
+```{r nifylke, echo=FALSE}
+p <- ggplot(valg2013[i, ], aes(x = Fylke, y = Kommuneprosent))
+p <- p + geom_boxplot()
+p <- p + facet_wrap(~ Partinavn)
+p <- p + theme(axis.text.x = element_text(angle = 90, hjust = 1, vjust = 0.5))
+p <- p + ylab("Prosent")
+print(p)
+```
+
+Boksplott for resten
+====================
+
+```{r resten, echo=FALSE}
+i <- which(valg2013$Parti %in% levels(valg2013$Parti)[10:21])
+p <- ggplot(valg2013[i, ], aes(x = Partinavn, y = Kommuneprosent))
+p <- p + geom_boxplot()
+p <- p + xlab("Parti") + ylab("Prosent")
+p <- p + theme(axis.text.x = element_text(angle = 15, hjust = 1))
+print(p)
+```
+
+Fylkesvise boksplott
+========================================================
+
+```{r restenfylke, echo=FALSE}
+p <- ggplot(valg2013[i, ], aes(x = Fylke, y = Kommuneprosent))
+p <- p + geom_boxplot()
+p <- p + facet_wrap(~ Partinavn)
+p <- p + theme(axis.text.x = element_text(angle = 90, hjust = 1, vjust = 0.5))
+p <- p + ylab("Prosent")
+print(p)
+```
