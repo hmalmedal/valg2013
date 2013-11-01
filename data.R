@@ -28,3 +28,10 @@ landsstemmer$Landstotal  <- sum(landsstemmer$Landsstemmer)
 landsstemmer$Landsprosent <- landsstemmer$Landsstemmer /
     landsstemmer$Landstotal * 100
 valg2013 <- join(valg2013, landsstemmer)
+
+parti <- read.csv("~/Documents/R/Valg 2013/parti.csv",
+                  colClasses = c("factor",
+                                 "character"))
+parti$Partinr <- as.factor(1:nrow(parti))
+
+valg2013 <- join(valg2013, parti)
