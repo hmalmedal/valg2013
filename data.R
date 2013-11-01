@@ -32,6 +32,6 @@ valg2013 <- join(valg2013, landsstemmer)
 parti <- read.csv("~/Documents/R/Valg 2013/parti.csv",
                   colClasses = c("factor",
                                  "character"))
-parti$Partinr <- as.factor(1:nrow(parti))
 
+valg2013$Parti <- factor(valg2013$Parti, parti$Parti)
 valg2013 <- join(valg2013, parti)
