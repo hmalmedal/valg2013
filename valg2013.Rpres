@@ -9,6 +9,8 @@ Innledning
 Dette er en presentasjon av partienes valgresultater i kommunene for
 stortingsvalget i 2013.
 
+Data og kode er tilgjengelig fra
+[GitHub](https://github.com/hmalmedal/valg2013).
 
 ```{r init, echo=FALSE}
 source("data.R")
