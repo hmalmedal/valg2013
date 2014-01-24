@@ -12,15 +12,15 @@ stortingsvalget i 2013.
 Data og kode er tilgjengelig fra
 [GitHub](https://github.com/hmalmedal/valg2013).
 
-```{r init, echo=FALSE}
+```{r init, echo = FALSE}
 source("data.R")
-opts_chunk$set(fig.width=864/72, fig.height=504/72, cache=T)
+opts_chunk$set(fig.width = 864/72, fig.height = 504/72, cache = T)
 ```
 
 Boksplott for de ni største partiene
 ========================================================
 
-```{r ni, echo=FALSE}
+```{r ni, echo = FALSE}
 library(ggplot2)
 i <- which(valg2013$Parti %in% levels(valg2013$Parti)[1:9])
 v <- valg2013
@@ -35,7 +35,7 @@ print(p)
 Fylkesvise boksplott
 ========================================================
 
-```{r nifylke, echo=FALSE}
+```{r nifylke, echo = FALSE}
 p <- ggplot(valg2013[i, ], aes(x = Fylke, y = Kommuneprosent))
 p <- p + geom_boxplot()
 p <- p + facet_wrap(~ Partinavn)
@@ -47,7 +47,7 @@ print(p)
 Boksplott for resten
 ====================
 
-```{r resten, echo=FALSE}
+```{r resten, echo = FALSE}
 i <- which(valg2013$Parti %in% levels(valg2013$Parti)[10:21])
 v <- valg2013
 levels(v$Partinavn) <- gsub(" ", "\n", levels(v$Partinavn))
@@ -64,7 +64,7 @@ print(p)
 Fylkesvise boksplott
 ========================================================
 
-```{r restenfylke, echo=FALSE}
+```{r restenfylke, echo = FALSE}
 v <- valg2013
 levels(v$Partinavn) <- gsub("i Lofoten.*$", "…", levels(v$Partinavn))
 p <- ggplot(v[i, ], aes(x = Fylke, y = Kommuneprosent))
