@@ -21,13 +21,13 @@ fylkesstemmer <- aggregate(Kommunestemmer ~ FylkeID + Parti, data = valg2013,
 colnames(fylkesstemmer)[3] <- "Fylkesstemmer"
 fylkesstemmer <- join(fylkesstemmer, fylkestotal)
 fylkesstemmer$Fylkesprosent <- fylkesstemmer$Fylkesstemmer /
-    fylkesstemmer$Fylkestotal * 100
+  fylkesstemmer$Fylkestotal * 100
 valg2013 <- join(valg2013, fylkesstemmer)
 landsstemmer <- aggregate(Kommunestemmer ~ Parti, data = valg2013, sum)
 colnames(landsstemmer)[2] <- "Landsstemmer"
 landsstemmer$Landstotal  <- sum(landsstemmer$Landsstemmer)
 landsstemmer$Landsprosent <- landsstemmer$Landsstemmer /
-    landsstemmer$Landstotal * 100
+  landsstemmer$Landstotal * 100
 valg2013 <- join(valg2013, landsstemmer)
 
 parti <- read.csv("~/Documents/R/Valg 2013/parti.csv")
