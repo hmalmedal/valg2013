@@ -21,7 +21,7 @@ valg2013 <- inner_join(valg2013, kommunetotal, by = "KommuneID") %>%
   mutate(Kommuneprosent = Kommunestemmer / Kommunetotal * 100)
 
 fylkestotal <- valg2013 %>%
-  group_by("FylkeID") %>%
+  group_by(FylkeID) %>%
   summarise(Fylkestotal = sum(Kommunestemmer))
 
 fylkesstemmer <- valg2013 %>%
