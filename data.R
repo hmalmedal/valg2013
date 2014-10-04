@@ -1,4 +1,4 @@
-library(dplyr, warn.conflicts = F)
+library(dplyr, warn.conflicts = FALSE)
 
 valg2013 <- read.csv("~/Documents/R/Valg 2013/valg2013.csv",
                      colClasses = c("factor",
