@@ -1,6 +1,6 @@
 library(dplyr, warn.conflicts = FALSE)
 
-valg2013 <- read.csv("~/Documents/R/Valg 2013/valg2013.csv",
+valg2013 <- read.csv("valg2013.csv",
                      colClasses = c("factor",
                                     "factor",
                                     "character",
@@ -40,7 +40,7 @@ landsstemmer <- valg2013 %>%
 
 valg2013 <- inner_join(valg2013, landsstemmer, by = "Parti")
 
-parti <- read.csv("~/Documents/R/Valg 2013/parti.csv") %>%
+parti <- read.csv("parti.csv") %>%
   tbl_df %>%
   mutate(Partinavn = factor(Partinavn, Partinavn))
 
