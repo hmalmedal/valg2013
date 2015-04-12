@@ -1,49 +1,26 @@
 library(dplyr, warn.conflicts = FALSE)
+library(readr)
 
-valg2013 <- read.csv("valg2013.csv",
-                     colClasses = c("factor",
-                                    "factor",
-                                    "character",
-                                    "factor",
-                                    "factor",
-                                    "NULL",
-                                    "integer",
-                                    rep("NULL", 5))) %>%
-  tbl_df %>%
-  mutate(Fylke = factor(Fylke, unique(Fylke))) %>%
-  select(FylkeID:Parti, Kommunestemmer = Stemmer.totalt)
+parti <- read_csv("parti.csv")
 
-kommunetotal <- valg2013 %>%
-  group_by(KommuneID) %>%
-  summarise(Kommunetotal = sum(Kommunestemmer))
-
-valg2013 <- inner_join(valg2013, kommunetotal, by = "KommuneID") %>%
-  mutate(Kommuneprosent = Kommunestemmer / Kommunetotal * 100)
-
-fylkestotal <- valg2013 %>%
-  group_by(FylkeID) %>%
-  summarise(Fylkestotal = sum(Kommunestemmer))
-
-fylkesstemmer <- valg2013 %>%
-  group_by(FylkeID, Parti) %>%
-  summarise(Fylkesstemmer = sum(Kommunestemmer)) %>%
-  inner_join(fylkestotal, by = "FylkeID") %>%
-  mutate(Fylkesprosent = Fylkesstemmer / Fylkestotal * 100)
-
-valg2013 <- inner_join(valg2013, fylkesstemmer, by = c("FylkeID", "Parti"))
-
-landsstemmer <- valg2013 %>%
+valg2013 <- read_csv("valg2013.csv", col_types = "_cc_c_i_____") %>%
+  rename(Kommunestemmer = `Stemmer totalt`) %>%
+  mutate(Fylke = factor(Fylke, levels = unique(Fylke))) %>%
+  mutate(Kommune = factor(Kommune, levels = unique(Kommune))) %>%
+  mutate(Parti = factor(Parti, levels = parti$Parti,
+                        labels = parti$Partinavn)) %>%
+  group_by(Kommune) %>%
+  mutate(Kommunetotal = sum(Kommunestemmer)) %>%
+  ungroup() %>%
+  mutate(Kommuneprosent = Kommunestemmer / Kommunetotal * 100) %>%
+  group_by(Fylke) %>%
+  mutate(Fylkestotal = sum(Kommunestemmer)) %>%
+  group_by(Fylke, Parti) %>%
+  mutate(Fylkesstemmer = sum(Kommunestemmer)) %>%
+  ungroup() %>%
+  mutate(Fylkesprosent = Fylkesstemmer / Fylkestotal * 100) %>%
   group_by(Parti) %>%
-  summarise(Landsstemmer = sum(Kommunestemmer)) %>%
-  mutate(Landstotal = sum(Landsstemmer),
+  mutate(Landsstemmer = sum(Kommunestemmer)) %>%
+  ungroup() %>%
+  mutate(Landstotal = sum(Kommunestemmer),
          Landsprosent = Landsstemmer / Landstotal * 100)
-
-valg2013 <- inner_join(valg2013, landsstemmer, by = "Parti")
-
-parti <- read.csv("parti.csv") %>%
-  tbl_df %>%
-  mutate(Partinavn = factor(Partinavn, Partinavn))
-
-valg2013 <- valg2013 %>%
-  mutate(Parti = factor(Parti, parti$Parti)) %>%
-  inner_join(parti, by = "Parti")

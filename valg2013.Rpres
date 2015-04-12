@@ -21,13 +21,13 @@ Boksplott for de ni største partiene
 
 ```{r ni, echo = FALSE}
 library(ggplot2)
-i <- which(valg2013$Partinavn %in% levels(valg2013$Partinavn)[1:9])
+i <- which(valg2013$Parti %in% levels(valg2013$Parti)[1:9])
 v <- valg2013
-levels(v$Partinavn) <- gsub(" ", "\n", levels(v$Partinavn))
-levels(v$Partinavn) <- gsub("\nDe\n", "\nDe ", levels(v$Partinavn))
-p <- ggplot(v[i, ], aes(x = Partinavn, y = Kommuneprosent))
+levels(v$Parti) <- gsub(" ", "\n", levels(v$Parti))
+levels(v$Parti) <- gsub("\nDe\n", "\nDe ", levels(v$Parti))
+p <- ggplot(v[i, ], aes(x = Parti, y = Kommuneprosent))
 p <- p + geom_boxplot()
-p <- p + xlab("Parti") + ylab("Prosent")
+p <- p + ylab("Prosent")
 print(p)
 ```
 
@@ -37,7 +37,7 @@ Fylkesvise boksplott
 ```{r nifylke, echo = FALSE}
 p <- ggplot(valg2013[i, ], aes(x = Fylke, y = Kommuneprosent))
 p <- p + geom_boxplot()
-p <- p + facet_wrap(~ Partinavn)
+p <- p + facet_wrap(~ Parti)
 p <- p + theme(axis.text.x = element_text(angle = 90, hjust = 1, vjust = 0.5))
 p <- p + ylab("Prosent")
 print(p)
@@ -47,16 +47,16 @@ Boksplott for resten
 ====================
 
 ```{r resten, echo = FALSE}
-i <- which(valg2013$Partinavn %in% levels(valg2013$Partinavn)[10:21])
+i <- which(valg2013$Parti %in% levels(valg2013$Parti)[10:21])
 v <- valg2013
-levels(v$Partinavn) <- gsub(" ", "\n", levels(v$Partinavn))
-levels(v$Partinavn) <- gsub("partiet", "-\npartiet", levels(v$Partinavn))
-levels(v$Partinavn) <- gsub("\ni\n", "\ni ", levels(v$Partinavn))
-levels(v$Partinavn) <- gsub("\ntil\n", "\ntil ", levels(v$Partinavn))
-levels(v$Partinavn) <- gsub("\nog\n", "\nog ", levels(v$Partinavn))
-p <- ggplot(v[i, ], aes(x = Partinavn, y = Kommuneprosent))
+levels(v$Parti) <- gsub(" ", "\n", levels(v$Parti))
+levels(v$Parti) <- gsub("partiet", "-\npartiet", levels(v$Parti))
+levels(v$Parti) <- gsub("\ni\n", "\ni ", levels(v$Parti))
+levels(v$Parti) <- gsub("\ntil\n", "\ntil ", levels(v$Parti))
+levels(v$Parti) <- gsub("\nog\n", "\nog ", levels(v$Parti))
+p <- ggplot(v[i, ], aes(x = Parti, y = Kommuneprosent))
 p <- p + geom_boxplot()
-p <- p + xlab("Parti") + ylab("Prosent")
+p <- p + ylab("Prosent")
 print(p)
 ```
 
@@ -65,10 +65,10 @@ Fylkesvise boksplott
 
 ```{r restenfylke, echo = FALSE}
 v <- valg2013
-levels(v$Partinavn) <- gsub("i Lofoten.*$", "…", levels(v$Partinavn))
+levels(v$Parti) <- gsub("i Lofoten.*$", "…", levels(v$Parti))
 p <- ggplot(v[i, ], aes(x = Fylke, y = Kommuneprosent))
 p <- p + geom_boxplot()
-p <- p + facet_wrap(~ Partinavn)
+p <- p + facet_wrap(~ Parti)
 p <- p + theme(axis.text.x = element_text(angle = 90, hjust = 1, vjust = 0.5))
 p <- p + ylab("Prosent")
 print(p)
