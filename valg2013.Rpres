@@ -11,7 +11,7 @@ stortingsvalget i 2013.
 Data og kode er tilgjengelig fra
 [GitHub](https://github.com/hmalmedal/valg2013).
 
-```{r init, echo = FALSE}
+```{r init, echo = FALSE, message = FALSE}
 source("data.R")
 opts_chunk$set(fig.width = 864/72, fig.height = 504/72, cache = TRUE)
 ```
