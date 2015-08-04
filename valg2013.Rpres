@@ -13,7 +13,7 @@ Data og kode er tilgjengelig fra
 
 ```{r init, echo = FALSE, message = FALSE}
 source("data.R")
-opts_chunk$set(fig.width = 864/72, fig.height = 504/72, cache = TRUE)
+opts_chunk$set(fig.width = 864/72, fig.height = 504/72)
 ```
 
 Boksplott for de ni største partiene
