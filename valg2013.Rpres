@@ -21,13 +21,13 @@ Boksplott for de ni største partiene
 
 ```{r ni, echo = FALSE}
 library(ggplot2)
+library(stringr)
 i <- which(valg2013$Parti %in% levels(valg2013$Parti)[1:9])
 v <- valg2013
-levels(v$Parti) <- gsub(" ", "\n", levels(v$Parti))
-levels(v$Parti) <- gsub("\nDe\n", "\nDe ", levels(v$Parti))
 p <- ggplot(v[i, ], aes(x = Parti, y = Kommuneprosent))
 p <- p + geom_boxplot()
 p <- p + ylab("Prosent")
+p <- p + scale_x_discrete(labels = function(x) str_wrap(x, 10))
 print(p)
 ```
 
@@ -49,14 +49,11 @@ Boksplott for resten
 ```{r resten, echo = FALSE}
 i <- which(valg2013$Parti %in% levels(valg2013$Parti)[10:21])
 v <- valg2013
-levels(v$Parti) <- gsub(" ", "\n", levels(v$Parti))
 levels(v$Parti) <- gsub("partiet", "-\npartiet", levels(v$Parti))
-levels(v$Parti) <- gsub("\ni\n", "\ni ", levels(v$Parti))
-levels(v$Parti) <- gsub("\ntil\n", "\ntil ", levels(v$Parti))
-levels(v$Parti) <- gsub("\nog\n", "\nog ", levels(v$Parti))
 p <- ggplot(v[i, ], aes(x = Parti, y = Kommuneprosent))
 p <- p + geom_boxplot()
 p <- p + ylab("Prosent")
+p <- p + scale_x_discrete(labels = function(x) str_wrap(x, 10))
 print(p)
 ```
 
