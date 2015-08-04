@@ -22,12 +22,12 @@ Boksplott for de ni største partiene
 ```{r ni, echo = FALSE}
 library(ggplot2)
 library(stringr)
-i <- which(valg2013$Parti %in% levels(valg2013$Parti)[1:9])
-v <- valg2013
-p <- ggplot(v[i, ], aes(x = Parti, y = Kommuneprosent))
+ni <- levels(valg2013$Parti)[1:9]
+v <- valg2013 %>% filter(Parti %in% ni)
+p <- ggplot(v, aes(x = Parti, y = Kommuneprosent))
 p <- p + geom_boxplot()
 p <- p + ylab("Prosent")
-p <- p + scale_x_discrete(labels = function(x) str_wrap(x, 10))
+p <- p + scale_x_discrete(labels = . %>% str_wrap(10))
 print(p)
 ```
 
@@ -35,7 +35,7 @@ Fylkesvise boksplott
 ========================================================
 
 ```{r nifylke, echo = FALSE}
-p <- ggplot(valg2013[i, ], aes(x = Fylke, y = Kommuneprosent))
+p <- ggplot(v, aes(x = Fylke, y = Kommuneprosent))
 p <- p + geom_boxplot()
 p <- p + facet_wrap(~ Parti)
 p <- p + theme(axis.text.x = element_text(angle = 90, hjust = 1, vjust = 0.5))
@@ -47,13 +47,13 @@ Boksplott for resten
 ====================
 
 ```{r resten, echo = FALSE}
-i <- which(valg2013$Parti %in% levels(valg2013$Parti)[10:21])
-v <- valg2013
-levels(v$Parti) <- gsub("partiet", "-\npartiet", levels(v$Parti))
-p <- ggplot(v[i, ], aes(x = Parti, y = Kommuneprosent))
+v <- valg2013 %>% filter(!Parti %in% ni)
+p <- ggplot(v, aes(x = Parti, y = Kommuneprosent))
 p <- p + geom_boxplot()
 p <- p + ylab("Prosent")
-p <- p + scale_x_discrete(labels = function(x) str_wrap(x, 10))
+p <- p + scale_x_discrete(labels = . %>%
+                            str_replace("parti", "-\nparti") %>%
+                            str_wrap(10))
 print(p)
 ```
 
@@ -61,9 +61,9 @@ Fylkesvise boksplott
 ========================================================
 
 ```{r restenfylke, echo = FALSE}
-v <- valg2013
+v <- valg2013 %>% filter(!Parti %in% ni)
 levels(v$Parti) <- gsub("i Lofoten.*$", "…", levels(v$Parti))
-p <- ggplot(v[i, ], aes(x = Fylke, y = Kommuneprosent))
+p <- ggplot(v, aes(x = Fylke, y = Kommuneprosent))
 p <- p + geom_boxplot()
 p <- p + facet_wrap(~ Parti)
 p <- p + theme(axis.text.x = element_text(angle = 90, hjust = 1, vjust = 0.5))
