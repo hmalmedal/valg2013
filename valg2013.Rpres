@@ -16,6 +16,17 @@ source("data.R")
 opts_chunk$set(fig.width = 864/72, fig.height = 504/72)
 ```
 
+```{r partilabels, echo = FALSE}
+partilabels <- function(x, width) {
+  function(x) {
+    x <- str_replace(x, "(?=parti)", "\u00ad")
+    x <- str_wrap(x, width)
+    x <- str_replace(x, "\u00ad(?=\n)", "-")
+    x
+  }
+}
+```
+
 Boksplott for de ni største partiene
 ========================================================
 
@@ -27,7 +38,7 @@ v <- valg2013 %>% filter(Parti %in% ni)
 p <- ggplot(v, aes(x = Parti, y = Kommuneprosent))
 p <- p + geom_boxplot()
 p <- p + ylab("Prosent")
-p <- p + scale_x_discrete(labels = . %>% str_wrap(10))
+p <- p + scale_x_discrete(labels = partilabels(width = 13))
 print(p)
 ```
 
@@ -51,9 +62,7 @@ v <- valg2013 %>% filter(!Parti %in% ni)
 p <- ggplot(v, aes(x = Parti, y = Kommuneprosent))
 p <- p + geom_boxplot()
 p <- p + ylab("Prosent")
-p <- p + scale_x_discrete(labels = . %>%
-                            str_replace("parti", "-\nparti") %>%
-                            str_wrap(10))
+p <- p + scale_x_discrete(labels = partilabels(width = 14))
 print(p)
 ```
 
