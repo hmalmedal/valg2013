@@ -35,9 +35,8 @@ library(ggplot2)
 library(stringr)
 ni <- levels(valg2013$Parti)[1:9]
 v <- valg2013 %>% filter(Parti %in% ni)
-p <- ggplot(v, aes(x = Parti, y = Kommuneprosent))
+p <- ggplot(v, aes(x = Parti, y = Prosent))
 p <- p + geom_boxplot()
-p <- p + ylab("Prosent")
 p <- p + scale_x_discrete(labels = partilabels(width = 13))
 print(p)
 ```
@@ -46,11 +45,10 @@ Fylkesvise boksplott
 ========================================================
 
 ```{r nifylke, echo = FALSE}
-p <- ggplot(v, aes(x = Fylke, y = Kommuneprosent))
+p <- ggplot(v, aes(x = Fylke, y = Prosent))
 p <- p + geom_boxplot()
 p <- p + facet_wrap(~ Parti)
 p <- p + theme(axis.text.x = element_text(angle = 90, hjust = 1, vjust = 0.5))
-p <- p + ylab("Prosent")
 print(p)
 ```
 
@@ -59,9 +57,8 @@ Boksplott for resten
 
 ```{r resten, echo = FALSE}
 v <- valg2013 %>% filter(!Parti %in% ni)
-p <- ggplot(v, aes(x = Parti, y = Kommuneprosent))
+p <- ggplot(v, aes(x = Parti, y = Prosent))
 p <- p + geom_boxplot()
-p <- p + ylab("Prosent")
 p <- p + scale_x_discrete(labels = partilabels(width = 14))
 print(p)
 ```
@@ -72,10 +69,9 @@ Fylkesvise boksplott
 ```{r restenfylke, echo = FALSE}
 v <- valg2013 %>% filter(!Parti %in% ni)
 levels(v$Parti) <- gsub("i Lofoten.*$", "…", levels(v$Parti))
-p <- ggplot(v, aes(x = Fylke, y = Kommuneprosent))
+p <- ggplot(v, aes(x = Fylke, y = Prosent))
 p <- p + geom_boxplot()
 p <- p + facet_wrap(~ Parti)
 p <- p + theme(axis.text.x = element_text(angle = 90, hjust = 1, vjust = 0.5))
-p <- p + ylab("Prosent")
 print(p)
 ```
