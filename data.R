@@ -1,7 +1,7 @@
 library(dplyr)
 library(readr)
 
-parti <- read_csv("parti.csv")
+parti <- read_csv("parti.csv", col_types = "cc")
 
 valg2013 <- read_csv("valg2013.csv", col_types = "_cc_c_i_____") %>%
   rename(Stemmer = `Stemmer totalt`) %>%
