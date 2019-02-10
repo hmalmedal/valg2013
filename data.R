@@ -1,10 +1,8 @@
-library(dplyr)
-library(forcats)
-library(readr)
+library(tidyverse)
 
-parti <- read_csv("parti.csv", col_types = "cc")
+parti <- read_csv("parti.csv")
 
-valg2013 <- read_csv("valg2013.csv", col_types = "_cc_c_i_____") %>%
+valg2013 <- read_csv("valg2013.csv") %>%
   rename(Stemmer = `Stemmer totalt`) %>%
   mutate(Fylke = as_factor(Fylke)) %>%
   mutate(Kommune = as_factor(Kommune)) %>%

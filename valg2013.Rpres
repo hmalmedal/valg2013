@@ -31,8 +31,6 @@ Boksplott for de ni største partiene
 ========================================================
 
 ```{r ni, echo = FALSE}
-library(ggplot2)
-library(stringr)
 ni <- levels(valg2013$Parti)[1:9]
 v <- valg2013 %>% filter(Parti %in% ni)
 p <- ggplot(v, aes(x = Parti, y = Prosent))
